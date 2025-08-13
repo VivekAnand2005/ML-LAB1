@@ -17,6 +17,7 @@ sil_scores = []
 ch_scores = []
 db_scores = []
 
+# Compute metrics for each k
 for k in k_values:
     kmeans = KMeans(n_clusters=k, random_state=42, n_init="auto")
     kmeans.fit(X)
@@ -24,14 +25,29 @@ for k in k_values:
     ch_scores.append(calinski_harabasz_score(X, kmeans.labels_))
     db_scores.append(davies_bouldin_score(X, kmeans.labels_))
 
-# Plot the scores
-plt.figure(figsize=(10, 6))
-plt.plot(k_values, sil_scores, marker='o', label='Silhouette Score')
-plt.plot(k_values, ch_scores, marker='s', label='Calinski-Harabasz Score')
-plt.plot(k_values, db_scores, marker='^', label='Davies-Bouldin Score')
+# Plot Silhouette Score
+plt.figure(figsize=(8, 5))
+plt.plot(k_values, sil_scores, marker='o', color='b')
 plt.xlabel("Number of Clusters (k)")
-plt.ylabel("Score")
-plt.title("KMeans Clustering Metrics vs k")
-plt.legend()
+plt.ylabel("Silhouette Score")
+plt.title("Silhouette Score vs k")
+plt.grid(True)
+plt.show()
+
+# Plot Calinski–Harabasz Score
+plt.figure(figsize=(8, 5))
+plt.plot(k_values, ch_scores, marker='s', color='g')
+plt.xlabel("Number of Clusters (k)")
+plt.ylabel("Calinski–Harabasz Score")
+plt.title("Calinski–Harabasz Score vs k")
+plt.grid(True)
+plt.show()
+
+# Plot Davies–Bouldin Score
+plt.figure(figsize=(8, 5))
+plt.plot(k_values, db_scores, marker='^', color='r')
+plt.xlabel("Number of Clusters (k)")
+plt.ylabel("Davies–Bouldin Score")
+plt.title("Davies–Bouldin Score vs k")
 plt.grid(True)
 plt.show()
